@@ -1,0 +1,34 @@
+{
+    "name": "data-importer",
+    "version": "0.1.0",
+    "author": "Andrés M. Castillo",
+    "repository": "andcastillo/data-importer",
+    "homepage": "https://github.com/andcastillo/data-importer",
+    "scripts": {
+        "split-file": "grep -hnr '3JHN' train-ocl.csv > train-3JHN.csv",
+        "test": "npm run testonly && npm run eslint",
+        "testonly": "jest",
+        "build": "npm run build-clean && npm run compile && npm run build-dist",
+        "build-clean": "rimraf ./lib/",
+        "build-dist": "cheminfo build -u",
+        "eslint": "eslint src",
+        "eslint-fix": "npm run eslint -- --fix",
+        "compile": "babel src --out-dir lib --quiet --ignore __tests__",
+        "prepublish": "npm run compile"
+      },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "cheminfo-tools": "^1.23.3",
+        "eslint": "^5.15.3",
+        "eslint-config-cheminfo": "^1.20.1",
+        "eslint-plugin-import": "^2.16.0",
+        "eslint-plugin-jest": "^22.4.1",
+        "jest": "^24.5.0",
+        "rimraf": "^2.6.3"
+      },
+      "dependencies": {
+          "openchemlib-extended": "6.0.0"
+      }
+
+}
