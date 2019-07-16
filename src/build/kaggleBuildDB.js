@@ -2,9 +2,6 @@
 
 const fs = require('fs');
 
-const dataFolder = '/home/acastillo/Documents/kaggle/champs-scalar-coupling/';
-const type = '3JHN';
-
 function build(path, type) {
 
   var train = fs.readFileSync(`${path}/train-${type}.csv`).toString().split('\n');
@@ -48,4 +45,7 @@ function build(path, type) {
 module.exports = build;
 
 
+//const dataFolder = '/home/acastillo/Documents/kaggle/champs-scalar-coupling/';
+//const type = '3JHN';
 
+build('data/', '1JHC');
