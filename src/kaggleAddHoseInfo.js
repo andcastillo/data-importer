@@ -4,7 +4,7 @@ const fs = require('fs');
 const OCLE = require('../../..');
 
 // const getAllCouplings = require('../new/getAllCouplings');
-const getAllCouplings = require('./getAllCouplingsAC');
+const getAllCouplings = require('./tools/getAllCouplingsAC');
 
 
 const dataFolder = '/home/acastillo/kaggle/champs-scalar-coupling/';
@@ -21,8 +21,7 @@ let head = train.splice(0, 1);
 
 const maxSphereSize = 5;
 
-console.log(head + ',distance,torsion,angle,csA,csB,mullikenA,mullikenB,path0,path1,path2,hoseA1,hoseA2,hoseA3,hose
-A4,hoseA5,hoseB1,hoseB2,hoseB3,hoseB4,hoseB5');
+console.log(head + ',distance,torsion,angle,csA,csB,mullikenA,mullikenB,path0,path1,path2,hoseA1,hoseA2,hoseA3,hoseA4,hoseA5,hoseB1,hoseB2,hoseB3,hoseB4,hoseB5');
 
 let molid = '';
 let diaIDs = null;

@@ -44,7 +44,6 @@ function build(path, type) {
 
 module.exports = build;
 
-
 //const dataFolder = '/home/acastillo/Documents/kaggle/champs-scalar-coupling/';
 //const type = '3JHN';
 

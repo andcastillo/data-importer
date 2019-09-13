@@ -3,7 +3,7 @@
 const fs = require('fs');
 const OCLE = require('../../..');
 
-const getAllCouplings = require('../new/getAllCouplings');
+const getAllCouplings = require('../tools/getAllCouplingsCC');
 
 const dataFolder = '/home/acastillo/Documents/kaggle/champs-scalar-coupling/';
 const structuremol = `${dataFolder}structuresmol/`;
