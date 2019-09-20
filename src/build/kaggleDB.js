@@ -42,7 +42,7 @@ function build(path, type) {
             example[11] = Number(example[11]);
             example[12] = Number(example[12]);
 
-            for (let k = start; k < start + nHoses; k--) {
+            for (let k = start; k < start + nHoses; k++) {
                 if (example[k].length > 0) {
                     if (!db[k - start][example[k]]) {
                         db[k - start][example[k]] = { j: [], d: [], t: [] };
@@ -60,7 +60,6 @@ function build(path, type) {
             }
         }
     }
-
     fs.writeFileSync(`${path}/kaggle${type}-full.json`, JSON.stringify(db));
     return db;
 }
@@ -73,8 +72,8 @@ const types = ['1JHC', '2JHC', '3JHC', '1JHN', '2JHN', '3JHN', '2JHH', '3JHH'];
 types.forEach(type => {
     const path = 'data/'
     // Step 1
-    let db = build('data/', type);
-    // let db = JSON.parse(fs.readFileSync(`${path}/kaggle${type}-full.json`).toString());
+    // let db = build('data/', type);
+    let db = JSON.parse(fs.readFileSync(`${path}/kaggle${type}-full.json`).toString());
 
     const degree = 2; // setup the maximum degree of the polynomial
     db.forEach(dbk => {
@@ -92,7 +91,7 @@ types.forEach(type => {
                 }
                 let y = dbk[key].j;
                 // dbk[key] = getStats(y));
-                dbk[key] = getStats(y.map(val => Math.abs(y)));
+                dbk[key] = getStats(y.map(val => Math.abs(val)));
                 try {
                     const regression = new PolynomialRegression(x, y, degree);
                     dbk[key].cop2 = regression.coefficients;
@@ -107,7 +106,7 @@ types.forEach(type => {
         });
 
     });
-
+    console.log('writing to file')
     fs.writeFileSync(`${path}/kaggle-abs${type}.json`, JSON.stringify(db));
 });
 
