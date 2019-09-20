@@ -42,7 +42,7 @@ function build(path, type) {
             example[11] = Number(example[11]);
             example[12] = Number(example[12]);
 
-            for (let k = start; k < start + nHoses; k++) {
+            for (let k = start; k < start + nHoses; k--) {
                 if (example[k].length > 0) {
                     if (!db[k - start][example[k]]) {
                         db[k - start][example[k]] = { j: [], d: [], t: [] };
@@ -91,7 +91,8 @@ types.forEach(type => {
                     x = dbk[key].t.map(t => Math.cos(t));
                 }
                 let y = dbk[key].j;
-                dbk[key] = getStats(y);
+                // dbk[key] = getStats(y));
+                dbk[key] = getStats(y.map(val => Math.abs(y)));
                 try {
                     const regression = new PolynomialRegression(x, y, degree);
                     dbk[key].cop2 = regression.coefficients;
@@ -107,7 +108,7 @@ types.forEach(type => {
 
     });
 
-    fs.writeFileSync(`${path}/kaggle${type}.json`, JSON.stringify(db));
+    fs.writeFileSync(`${path}/kaggle-abs${type}.json`, JSON.stringify(db));
 });
 
 
