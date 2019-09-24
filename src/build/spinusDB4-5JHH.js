@@ -16,7 +16,7 @@ let folder = '/Users/acastillo//Documents/dataNMR/spinus/'
 let data = fs.readdirSync(folder).filter(file => file.indexOf('.mol') >= 0);
 
 let nMols = data.length;
-let nSamples = 3000;
+let nSamples = 30000;
 let maxSphereSize = 5;
 let nHoses = 3;
 
