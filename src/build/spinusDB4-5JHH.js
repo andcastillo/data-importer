@@ -16,7 +16,7 @@ let folder = '/Users/acastillo//Documents/dataNMR/spinus/'
 let data = fs.readdirSync(folder).filter(file => file.indexOf('.mol') >= 0);
 
 let nMols = data.length;
-let nSamples = 10000;
+let nSamples = 3000;
 let maxSphereSize = 5;
 let nHoses = 3;
 
@@ -51,9 +51,9 @@ for (let n = 0; n < nSamples; n++) {
         });
     }
 
-    // console.log(JSON.stringify(spinus.map(s => s.j)));
-
+    //console.log(JSON.stringify(spinus.map(s => s.j)));
     spinus.forEach(atom => {
+        let hoseFrom = atomMap[atom.atomIDs[0]].hose;
         if (atom.j) {
             atom.j.forEach(j => {
                 if (j.distance > 3) {
@@ -62,20 +62,28 @@ for (let n = 0; n < nSamples; n++) {
                     let hose = atomMap[j.assignment[0]].hose;
                     try {
                         for (let i = maxSphereSize - 1; i >= maxSphereSize - nHoses; i--) {
-                            if (!db[i - nHoses + 1][hose[i]]) {
-                                db[i - nHoses + 1][hose[i]] = [];
+                            let key = canCat(hose[i], hoseFrom[i]);
+                            if (!db[i - nHoses + 1][key]) {
+                                db[i - nHoses + 1][key] = [];
                             }
-                            db[i - nHoses + 1][hose[i]].push(j.coupling);
+                            db[i - nHoses + 1][key].push(j.coupling);
                         }
-                    } catch(e) {
+                    } catch (e) {
                         console.log(type);
                         console.log(hose);
                     }
-                    
+
                 }
             });
         }
     });
+}
+
+function canCat(a, b) {
+    if (a < b)
+        return a + b;
+    else
+        return b + a;
 }
 
 function getStats(entry) {
@@ -93,10 +101,10 @@ function getStats(entry) {
 for (let type of types) {
     let db = dbs[type];
     fs.writeFileSync(`${outputFolder}/spinus${type}-full.json`, JSON.stringify(db));
-    for(let i = 0; i < db.length; i++) {
+    for (let i = 0; i < db.length; i++) {
         let dbi = db[i];
         let keys = Object.keys(dbi);
-        for(let key of keys) {
+        for (let key of keys) {
             dbi[key] = getStats(dbi[key]);
             dbi[key].cop2 = [dbi[key].mean, 0, 0];
         }
